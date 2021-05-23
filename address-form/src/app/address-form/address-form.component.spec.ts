@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DynamicFormAddressComponent } from './dynamic-form-address.component';
+import { AddressFormComponent } from './address-form.component';
 
-describe('DynamicFormAddressComponent', () => {
-  let component: DynamicFormAddressComponent;
-  let fixture: ComponentFixture<DynamicFormAddressComponent>;
+describe('AddressFormComponent', () => {
+  let component: AddressFormComponent;
+  let fixture: ComponentFixture<AddressFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DynamicFormAddressComponent ]
+      declarations: [ AddressFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DynamicFormAddressComponent);
+    fixture = TestBed.createComponent(AddressFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
