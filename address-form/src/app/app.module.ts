@@ -1,18 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
-import { DynamicFormAddressComponent } from './dynamic-form-address/dynamic-form-address.component';
-import {RouterModule} from '@angular/router';
+import { AddressFormComponent } from './address-form/address-form.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  imports: [BrowserModule, ReactiveFormsModule, RouterModule],
-  declarations: [ AppComponent, DynamicFormComponent, DynamicFormAddressComponent ],
-  bootstrap: [ AppComponent ]
+  imports: [BrowserModule, ReactiveFormsModule, BrowserAnimationsModule, MatFormFieldModule, MatSelectModule, FormsModule],
+  declarations: [ AppComponent, AddressFormComponent ],
+  bootstrap: [ AppComponent ],
 })
-export class AppModule {
-  constructor() {
-  }
-}
+export class AppModule { }
