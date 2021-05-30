@@ -1,6 +1,6 @@
 //cd MongodbAtlas 
 //npm start 
-//in postman  ex : GET http://localhost:3000/search?text=906 
+//in postman  ex : GET http://localhost:3000/search?text=906 (FYI:database contains matching addresses for only "906 dexter avenue north")
 
 const MongoClient = require('mongodb').MongoClient;
 const Express = require("express");
@@ -19,14 +19,18 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 var collection;
 app.get("/search", async (request, response) => {
-    let queryParam = request.query.text;
-    console.log(queryParam);
+    let queryParamStreet = request.query.street;
+    let queryParamcountry =request.query.country;
+    let result;
+    //console.log(queryParam);
+    if(queryParamcountry==null)
+    {
     try {
-        let result = await collection.aggregate([
+         result = await collection.aggregate([
             {
             "$search": {
                 "text": {
-                    "query": `${request.query.text}`,
+                    "query": `${queryParamStreet}`,
                     "path": "Street_Name",//column name 
                 }
             }
@@ -36,6 +40,37 @@ app.get("/search", async (request, response) => {
     } catch (e) {
         response.status(500).send({ message: e.message });
     }
+}
+else 
+{
+    try {
+        result = await collection.aggregate([
+            {
+               "$search":{
+                  "compound":{
+                     "must":[
+                        {
+                           "text": {
+                             "query": `${queryParamStreet}`,
+                             "path": "Street_Name",//column name 
+                         }
+                        },
+                        {
+                           "text":{
+                              "query":`${queryParamcountry}`,
+                              "path":"Country"
+                           }
+                        }
+                     ]
+                  }
+               }
+            }
+         ]).toArray();
+       response.send(result);
+   } catch (e) {
+       response.status(500).send({ message: e.message });
+   }  
+}
 });
 app.get("/test", async(request, response) => {
     response.send("Hello world");
