@@ -7,7 +7,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 
-import {UserModel} from './model/UserModel';
 import {AddressModel} from "./model/AddressModel";
 
 const options: cors.CorsOptions = {
@@ -19,7 +18,6 @@ class App {
 
     // ref to Express instance
     public expressApp: express.Application;
-    public Users: UserModel;
     public Addresss: AddressModel;
     public idGenerator: number;
 
@@ -29,7 +27,6 @@ class App {
         this.middleware();
         this.routes();
         this.idGenerator = 102;
-        this.Users = new UserModel();
         this.Addresss = new AddressModel();
     }
 
@@ -48,56 +45,7 @@ class App {
         let router = express.Router();
         router.use(cors(options));
 
-        // User APIs
-        router.post('/app/user/', (req, res) => {
-            console.log(req.body);
-            let jsonObj = req.body;
-            this.Users.model.create([jsonObj], (err) => {
-                if (err) {
-                    console.log('User object creation failed');
-                }
-            });
-            res.send(this.idGenerator.toString());
-            this.idGenerator++;
-        });
-
-        router.delete('/app/user', (req, res) => {
-            console.log(req.body)
-            let userId = req.body.userId;
-            this.Users.deleteUser(res, {userId: {$eq: userId}})
-        });
-
-        router.put('/app/user', (req, res) => {
-            console.log('Updating user according to following request: ' + req.body)
-            console.log(req.body)
-            this.Users.updateUser(res, req.body.userId, req.body.document)
-        });
-
-        router.get('/app/user/', (req, res) => {
-            console.log('Query all users');
-            this.Users.retrieveAllUsers(res);
-        });
-
-        router.get('/app/user/:userId', (req, res) => {
-            let userId = req.params.userId;
-            console.log('Query user collection for the following id: ' + userId);
-            this.Users.retrieveUserById(res, {$and: [{userId: {$eq: userId}}, {isActive: true}]})
-        });
-
-        //Secure Login
-        router.get('/app/user/secure/login', (req, res) => {
-            try {
-                let id = req.body.userId;
-                let name = req.body.name;
-                console.log('Query user collection for the following username an password: ' + id + " " + name);
-                this.Users.retrieveUserByNameandPassword(res, {userId: id , name: name})
-            }catch {
-              res.status(404)
-              res.send({ error: "This Name doesn't exist!" })
-            }
-          });
-
-
+        
         // Address APIs
         router.post('/app/Address/', (req, res) => {
             console.log(req.body);

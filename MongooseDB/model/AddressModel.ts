@@ -35,19 +35,22 @@ class AddressModel {
                 //N, E, S, W, NE, SE, NW, SW
                 Street_Direction: String,
                 //7
+                //House
                 //PO Box, Apartment, Building, Floor, Office, Suite
                 Address_Type: String,
                 //8
+                //House Number
                 //Box Number, Apartment Number, Floor Number remember apartment numbers and offices sometimes have alphanumeric info - like 1A
                 Address_Type_Identifier:String,
                 //9
-                //District
+                //Area
                 //hamlet/village
+                //Municipal
+                //Municipality  
                 //For instance, if your hamlet/village appears in the address before the town
                 Local_Municipality:String,
                 //10
-                //Municipal
-                //Municipality
+                //Province
                 //City_or_Town
                 City_or_Town:String,
                 //11
@@ -55,6 +58,7 @@ class AddressModel {
                 //District
                 //Povince
                 //prefecture 
+                //Emirate
                 //State (U.S.), Povince (Canada), Federal District (Mexico), County (U.K.), etc...
                 Governing_District:String,
                 //12
@@ -68,23 +72,29 @@ class AddressModel {
                 //Name
                 Name:String,
                 //15
+                //Canton
+                //Post town
+                //Town ship
+                //Sub Region 
                 //Parish 
                 //Locality
                 //Neighborhood
                 //Subdistrict
+                //Union Council
                 Neighborhood:String,
                 //16
                 //Additional Delivery Information
-                // Son/Daughter Of (DO/SO) Or Husband/Wife Of (H/O or W/O)
+                //Son/Daughter Of (DO/SO) Or Husband/Wife Of (H/O or W/O)
                 Recipient_Information:String,
                 //17
                 //Post_Office
                 Post_Office:String,
                 //18
-                //Replace
-                Building_Name:String,
+                //Federal Entity
+                Federal_Entity:String,
                 //19
                 //Company
+                //Landlord
                 Organization:String,
                 //20
                 //Spatial_dispatching_information
