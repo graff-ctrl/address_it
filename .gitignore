@@ -102,3 +102,19 @@ dist
 
 # TernJS port file
 .tern-port
+MongooseDB/db/collection-11--5942778877786588519.wt
+*.wt
+*.2021-03-14T23-08-37Z-00000
+*.2021-03-15T00-37-09Z-00000
+*.2021-03-15T04-50-37Z-00000
+*.2021-03-15T21-58-33Z-00000
+*.0000000004
+*.0000000001
+*.0000000002
+*.lock
+*.bson
+MongooseDB/db/WiredTiger
+*.turtle
+package.json
+package-lock.json
+MongooseDB/tsconfig.json
