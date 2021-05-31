@@ -6,8 +6,6 @@ const MongoClient = require('mongodb').MongoClient;
 const Express = require("express");
 const Cors = require("cors");
 const { request, response } = require("express");
-const AddressModel= require ("./model/AddressModel");
-
 
 const app = Express();
 

@@ -19,6 +19,7 @@ export class AddressFormComponent{
   isCountrySelected: boolean;
   countryList: Country[];
   listAddresses: Address[];
+  selectInput: any;
 
   addressForm = this.formBuilder.group({
     streetOne: [''],
