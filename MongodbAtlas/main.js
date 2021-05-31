@@ -32,8 +32,8 @@ app.get("/search", async (request, response) => {
     let queryParamStreet = request.query.street;
     let queryParamcountry =request.query.country;
     let result;
-    //console.log(queryParam);
-    if(queryParamcountry==null)
+    // console.log(queryParam);
+    if(queryParamcountry==null || queryParamcountry=='')
     {
     try {
          result = await collection.aggregate([

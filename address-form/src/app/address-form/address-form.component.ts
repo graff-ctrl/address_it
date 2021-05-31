@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormBuilder, Validators, FormArray, FormControl} from '@angular/forms';
-import {AddressService} from '../address.service';
-import { Address } from '../../model/Address';
+import { AddressService } from '../address.service';
+import {Observable} from "rxjs";
 
 interface Country {
   id: number;
@@ -16,14 +16,12 @@ interface Country {
 export class AddressFormComponent{
 
   countries = new FormControl();
-  isCountrySelected: boolean;
   countryList: Country[];
-  listAddresses: Address[];
-  selectInput: any;
+  searchResults: any;
 
   addressForm = this.formBuilder.group({
-    streetOne: [''],
-    streetTwo: [''],
+    streetOne: ['', [Validators.required, Validators.minLength(1), Validators.pattern('^[a-zA-Z]+$')]],
+    streetTwo: ['', [Validators.pattern('^[a-zA-Z]+$')]],
     town: [''],
     city: [''],
     region: [''],
@@ -31,9 +29,8 @@ export class AddressFormComponent{
     country: ['']
   });
 
-  constructor(private $list: AddressService, private formBuilder: FormBuilder) {
-
-     this.countryList = [
+  constructor(private formBuilder: FormBuilder, private api: AddressService) {
+    this.countryList = [
       {id: 1, name: 'USA'},
       {id: 2, name: 'Canada'},
       {id: 3, name: 'Japan'}
@@ -41,15 +38,10 @@ export class AddressFormComponent{
   }
 
 
-  onSubmit() {
-    this.$list.getaddresses(this.addressForm).subscribe(
-      data =>
-      {
-        this.listAddresses = data;
-      }
-    );
-    console.log(this.addressForm.value);
+  onSubmit(data) {
+    this.api.getAddresses(data).subscribe(resp => {
+      this.searchResults = resp;
+    });
+    console.log(this.searchResults);
   }
 }
-
-
