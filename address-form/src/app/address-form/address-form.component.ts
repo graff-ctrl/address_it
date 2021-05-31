@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormBuilder, Validators, FormArray, FormControl} from '@angular/forms';
+import {AddressService} from '../address.service';
+import { Address } from '../../model/Address';
 
 interface Country {
   id: number;
@@ -16,6 +18,7 @@ export class AddressFormComponent{
   countries = new FormControl();
   isCountrySelected: boolean;
   countryList: Country[];
+  listAddresses: Address[];
 
   addressForm = this.formBuilder.group({
     streetOne: [''],
@@ -27,7 +30,7 @@ export class AddressFormComponent{
     country: ['']
   });
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private $list: AddressService, private formBuilder: FormBuilder) {
 
      this.countryList = [
       {id: 1, name: 'USA'},
@@ -36,16 +39,14 @@ export class AddressFormComponent{
     ];
   }
 
-  selectInput(event) {
-    let selected = event.target.value.name;
-    if (selected == 'Canada'){
-      this.isCountrySelected = true;
-    } else {
-      this.isCountrySelected = false;
-    }
-  }
 
   onSubmit() {
+    this.$list.getaddresses(this.addressForm).subscribe(
+      data =>
+      {
+        this.listAddresses = data;
+      }
+    );
     console.log(this.addressForm.value);
   }
 }

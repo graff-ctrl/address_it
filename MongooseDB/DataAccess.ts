@@ -5,7 +5,7 @@ class DataAccess {
     static mongooseInstance: any;
     static mongooseConnection: Mongoose.Connection;
     
-    static DB_CONNECTION_STRING:string = '';
+    static DB_CONNECTION_STRING:string = 'mongodb+srv://<username>:<password>@cluster0.qtsjt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
     
     constructor () {
         DataAccess.connect();

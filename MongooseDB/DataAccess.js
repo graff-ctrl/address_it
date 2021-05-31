@@ -17,7 +17,6 @@ var DataAccess = /** @class */ (function () {
         this.mongooseInstance = Mongoose.connect(this.DB_CONNECTION_STRING);
         return this.mongooseInstance;
     };
-    
     DataAccess.DB_CONNECTION_STRING = '';
     return DataAccess;
 }());
