@@ -5,19 +5,31 @@
 const MongoClient = require('mongodb').MongoClient;
 const Express = require("express");
 const Cors = require("cors");
-const { request } = require("express");
+const { request, response } = require("express");
+const AddressModel= require ("./model/AddressModel");
 
 
 const app = Express();
-app.use(Express.json());
-app.use(Express.urlencoded({ extended: true }));
+
+
+const bodyParser = require('body-parser');
+
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
 app.use(Cors());
 
 
-const uri = "mongodb+srv://rajataks:Mercy123456@cluster0.xgngq.mongodb.net/Testsearch?retryWrites=true&w=majority"; //atlas uri
+const uri = "mongodb+srv://rajataks:Mercy123456@cluster0.qtsjt.mongodb.net/Address?retryWrites=true&w=majority"; //atlas uri
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 var collection;
+
+//search addresses 
 app.get("/search", async (request, response) => {
     let queryParamStreet = request.query.street;
     let queryParamcountry =request.query.country;
@@ -29,9 +41,9 @@ app.get("/search", async (request, response) => {
          result = await collection.aggregate([
             {
             "$search": {
-                "text": {
+                "autocomplete": {
                     "query": `${queryParamStreet}`,
-                    "path": "Street_Name",//column name 
+                    "path": "Street_Name",
                 }
             }
         }
@@ -50,7 +62,7 @@ else
                   "compound":{
                      "must":[
                         {
-                           "text": {
+                           "autocomplete": {
                              "query": `${queryParamStreet}`,
                              "path": "Street_Name",//column name 
                          }
@@ -72,13 +84,44 @@ else
    }  
 }
 });
-app.get("/test", async(request, response) => {
-    response.send("Hello world");
-})
+
+//Retrieve all addresses
+app.get("/addresses", async(request, response) => {
+   collections.find().toArray((err, result)=>{
+       if(err) throw err;
+       response.json(result);
+   });
+});
+
+//add an address
+app.post("/addAddress", async (request,response)=>{
+    console.log(request.body);
+    const address= request.body;
+    collection.insertOne(address, (err, result)=>{
+        if(err)throw err;
+        response.status(201).json(address);
+    });
+});
+
+//Delete an address
+app.delete("/deleteAddress/:id", async (request, response)=>{
+    const addressId=request.params.id;
+    console.log("Delete item with id:", addressId);
+    collection.deleteOne({id: addressId}, function(err, result){
+      if(err) throw err;  
+    collection.find().toArray(function(_err, _result){
+        if(_err) throw _err;
+        response.json(_result);
+
+    });
+}); 
+});
+
+
 app.listen(3000, async () => {
     try {
         await client.connect();
-        collection = client.db("Testsearch").collection("address");
+        collection = client.db("Address").collection("global Address");
     } catch (e) {
         console.error(e);
     }
