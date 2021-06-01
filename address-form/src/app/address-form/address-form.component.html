@@ -2,12 +2,21 @@
 <body>
 <div style="float: left; width:50%;">
 
-  <form [formGroup]="addressForm" (ngSubmit)="onSubmit(addressForm.value)" novalidate action="javascript:;" >
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit(addressForm.value)" novalidate>
 
     <p>
-      <label for="streetlineone">Street Line 1 </label>
-      <input type="text" id="streetlineone" name="streetlineone" formControlName="streetOne">
+      <label for="streetOne">Street Line 1 </label>
+      <input type="text" id="streetOne" name="streetOne" formControlName="streetOne">
     </p>
+    <div
+      *ngIf="!streetOne?.valid && (streetOne?.dirty ||streetOne?.touched)">
+      <div [hidden]="!streetOne.errors.required">
+        Street Name is required
+      </div>
+      <div [hidden]="!streetOne.errors.streetOne">
+        Min Length is 1
+      </div>
+    </div>
 
 
     <p>

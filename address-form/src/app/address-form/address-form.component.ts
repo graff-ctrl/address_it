@@ -37,6 +37,9 @@ export class AddressFormComponent{
     ];
   }
 
+  get streetOne() {
+    return this.addressForm.get('streetOne');
+  }
 
   onSubmit(data) {
     this.api.getAddresses(data).subscribe(resp => {
