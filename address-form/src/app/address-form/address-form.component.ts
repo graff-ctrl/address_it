@@ -31,7 +31,7 @@ export class AddressFormComponent{
 
   constructor(private formBuilder: FormBuilder, private api: AddressService) {
     this.countryList = [
-      {id: 1, name: 'USA'},
+      {id: 1, name: 'United States'},
       {id: 2, name: 'Canada'},
       {id: 3, name: 'Japan'}
     ];
