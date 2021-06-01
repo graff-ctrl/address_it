@@ -6,8 +6,6 @@ const MongoClient = require('mongodb').MongoClient;
 const Express = require("express");
 const Cors = require("cors");
 const { request, response } = require("express");
-const AddressModel= require ("./model/AddressModel");
-
 
 const app = Express();
 
@@ -34,8 +32,8 @@ app.get("/search", async (request, response) => {
     let queryParamStreet = request.query.street;
     let queryParamcountry =request.query.country;
     let result;
-    //console.log(queryParam);
-    if(queryParamcountry==null)
+    // console.log(queryParam);
+    if(queryParamcountry==null || queryParamcountry=='')
     {
     try {
          result = await collection.aggregate([

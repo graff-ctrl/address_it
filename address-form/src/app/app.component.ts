@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AddressFormComponent} from './address-form/address-form.component';
 
 export type SearchType = 'address';
 

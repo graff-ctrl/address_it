@@ -1,70 +1,94 @@
+
 <body>
-  <div style="float: left; width:50%;">
+<div style="float: left; width:50%;">
 
-    <form [formGroup]="addressForm" (ngSubmit)="onSubmit()" novalidate action="javascript:;" >
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit(addressForm.value)" novalidate>
 
-      <p>
-        <label for="streetlineone">Street Line 1 </label>
-        <input type="text" id="streetlineone" name="streetlineone" formControlName="streetOne">
-      </p>
-
-
-      <p>
-        <label for="streetTwo">Street Line 2 </label>
-        <input type="text" id="streetTwo" name="streetTwo" formControlName="streetTwo">
-      </p>
-
-      <p>
-        <label for="town">Town </label>
-        <input type="text" id="town" name="town" formControlName="town">
-      </p>
-
-      <p>
-        <label for="city">City </label>
-        <input type="text" id="city" name="city" formControlName="city">
-      </p>
-
-      <p>
-        <label for="state">State </label>
-        <input type="text" id="state" name="region" formControlName="region">
-      </p>
-
-      <div *ngIf="!isCountrySelected">
-        <label for="province">Province </label>
-        <input type="text" id="province" name="region" formControlName="region">
+    <p>
+      <label for="streetOne">Street Line 1 </label>
+      <input type="text" id="streetOne" name="streetOne" formControlName="streetOne">
+    </p>
+    <div
+      *ngIf="!streetOne?.valid && (streetOne?.dirty ||streetOne?.touched)">
+      <div [hidden]="!streetOne.errors.required">
+        Street Name is required
       </div>
+      <div [hidden]="!streetOne.errors.streetOne">
+        Min Length is 1
+      </div>
+    </div>
 
-      <p>
-        <label for="postalCode">Postal Code </label>
-        <input type="text" id="postalCode" name="postalCode" formControlName="postalCode">
-      </p>
 
-      <p>
-        <label for="country">Country </label>
-        <select id="country" name="country" formControlName="country" (change)="selectInput($event)">
-          <option [ngValue]="c.id" *ngFor="let c of countryList" value="c.name">
-            {{c.name}}
-          </option>
-        </select>
-      </p>
-    </form>
+    <p>
+      <label for="streetTwo">Street Line 2 </label>
+      <input type="text" id="streetTwo" name="streetTwo" formControlName="streetTwo">
+    </p>
 
-  </div>
+    <p>
+      <label for="town">Town </label>
+      <input type="text" id="town" name="town" formControlName="town">
+    </p>
 
-  <div style="float: right; width:50%;">
+    <p>
+      <label for="city">City </label>
+      <input type="text" id="city" name="city" formControlName="city">
+    </p>
 
-    <h3>Form Status</h3>
-    <b>valid : </b>{{addressForm.valid}}
-    <b>invalid : </b>{{addressForm.invalid}}
-    <b>touched : </b>{{addressForm.touched}}
-    <b>untouched : </b>{{addressForm.untouched}}
-    <b>pristine : </b>{{addressForm.pristine}}
-    <b>dirty : </b>{{addressForm.dirty}}
-    <b>disabled : </b>{{addressForm.disabled}}
-    <b>enabled : </b>{{addressForm.enabled}}
+    <p>
+      <label for="state">State </label>
+      <input type="text" id="state" name="region" formControlName="region">
+    </p>
 
-    <h3>Form Value</h3>
-    {{addressForm.value |json}}
+<!--    <div *ngIf="!isCountrySelected">-->
+<!--      <label for="province">Province </label>-->
+<!--      <input type="text" id="province" name="region" formControlName="region">-->
+<!--    </div>-->
 
-  </div>
+    <p>
+      <label for="postalCode">Postal Code </label>
+      <input type="text" id="postalCode" name="postalCode" formControlName="postalCode">
+    </p>
+
+    <p>
+      <label for="country">Country </label>
+      <select id="country" name="country" formControlName="country">
+        <option [ngValue]="c.name" *ngFor="let c of countryList" value="c.name">
+          {{c.name}}
+        </option>
+      </select>
+    </p>
+
+    <p>
+      <button type="submit">Search</button>
+    </p>
+  </form>
+
+</div>
+
+<div style="float: right; width:50%;">
+
+  <h3>Form Status</h3>
+  <b>valid : </b>{{addressForm.valid}}
+  <b>invalid : </b>{{addressForm.invalid}}
+  <b>touched : </b>{{addressForm.touched}}
+  <b>untouched : </b>{{addressForm.untouched}}
+  <b>pristine : </b>{{addressForm.pristine}}
+  <b>dirty : </b>{{addressForm.dirty}}
+  <b>disabled : </b>{{addressForm.disabled}}
+  <b>enabled : </b>{{addressForm.enabled}}
+
+  <h3>Form Value</h3>
+  {{addressForm.value |json}}
+
+  <h3>Search Results</h3>
+  <ul class="search-result">
+    <li *ngFor="let address of searchResults" >
+        {{address.Street_Name}}
+        {{address.City_or_Town}}
+        {{address.Postal_Area}}
+        {{address.Country}}
+    </li>
+  </ul>
+
+</div>
 </body>
