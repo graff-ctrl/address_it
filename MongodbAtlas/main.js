@@ -23,6 +23,7 @@ app.use(Cors());
 
 
 const uri = "mongodb+srv://rajataks:Mercy123456@cluster0.qtsjt.mongodb.net/Address?retryWrites=true&w=majority"; //atlas uri
+//const uri = "mongodb+srv://Test:oMmwN3JVX15TN95b@cluster0.qtsjt.mongodb.net/Address?retryWrites=true&w=majority"; //atlas uri
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 var collection;
